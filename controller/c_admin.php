@@ -8,7 +8,6 @@ class C_admin extends Controller{
     {
         $mRoom = new M_admin;
         $rooms= $mRoom->getAllRoom();
-        var_dump($room);
         return $this->loadView('room');
     }
 

@@ -15,6 +15,48 @@ class C_room extends Controller{
         return $this->loadView('room', $data);
     }
 
+    public function show($room_id)
+    {
+        $mRoom = new M_room;
+        $detail = $mRoom->getRoomDetail($room_id);
+        $data = [
+            'detail' => $detail, 
+        ];
+        return $this->loadView('room_d', $data);
+    }
+    public function checkIn($room_id)
+    {
+        $mRoom = new M_room;
+        $detail = $mRoom->getRoomDetail($room_id);
+        $data = [
+            'detail' => $detail, 
+        ];
+        return $this->loadView('room_ci', $data);
+    }
+
+    public function checkOut($room_id) 
+    {
+        $mRoom = new M_room;
+        $detail = $mRoom->getRoomDetail($room_id);
+        $data = [
+            'detail' => $detail, 
+        ];
+        return $this->loadView('room_co', $data);
+    }
+
+    public function postCheckIn($request=array()) {
+        $mRoom = new M_room;
+        $mRoom->postcheckIn($request);
+        header("location:index.php");
+    }
+
+    public function postCheckOut($request=array()) {
+        $mRoom = new M_room;
+        $mRoom->postcheckOut($request);
+        header("location:index.php");
+    }
+
+
     public function store($request=array())
     {
         $mRoom = new M_room;

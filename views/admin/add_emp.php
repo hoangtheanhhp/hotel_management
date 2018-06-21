@@ -1,3 +1,10 @@
+ <?php
+    $detail = $data['detail'];
+    $cRoom = new C_employee();
+    if(isset($_POST['staff'])) {
+         $cRoom->store($_POST);
+    }
+?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
@@ -19,11 +26,11 @@
                 <div class="panel-heading">Employee Detail:</div>
                 <div class="panel-body">
                     <div class="emp-response"></div>
-                    <form role="form" id="addEmployee" data-toggle="validator">
+                    <form role="form" action="add_employee.php" method="post" data-toggle="validator">
                         <div class="row">
                             <div class="form-group col-lg-6">
                                 <label>Staff</label>
-                                <select class="form-control" id="staff_type" required data-error="Select Staff Type">
+                                <select class="form-control" name="staff" required data-error="Select Staff Type">
                                     <option selected disabled>Select Staff Type</option>
                                     <?php
                                     $query = "SELECT * FROM staff_type";
