@@ -1,3 +1,20 @@
+<?php
+    $rooms = $data['rooms'];
+    $roomTypes = $data['roomTypes'];
+    $cRoom = new C_room();
+    if(isset($_POST['add_room'])) {
+        $cRoom->store($_POST);
+    }
+    if(isset($_POST['del_id'])) {
+        $cRoom->destroy($_POST['del_id']);
+    }
+    if(isset($_POST['edit_id'])) {
+        $cRoom->update($_POST);
+    }
+    if(isset($_POST['book_id'])) {
+        $cRoom->book($_POST['book_id']);
+    }
+?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
@@ -23,18 +40,6 @@
                     <button class="btn btn-info pull-right" data-toggle="modal" data-target="#addRoom">Thêm Phòng</button>
                 </div>
                 <div class="panel-body">
-                    <?php
-                    if (isset($_GET['error'])) {
-                        echo "<div class='alert alert-danger'>
-                                <span class='glyphicon glyphicon-info-sign'></span> &nbsp; Error on Delete !
-                            </div>";
-                    }
-                    if (isset($_GET['success'])) {
-                        echo "<div class='alert alert-success'>
-                                <span class='glyphicon glyphicon-info-sign'></span> &nbsp; Successfully Delete !
-                            </div>";
-                    }
-                    ?>
                     <table class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%"
                            id="rooms">
                         <thead>
@@ -47,64 +52,77 @@
                             <th>Hành động</th>
                         </tr>
                         </thead>
-                        <!-- <tbody>
+                        <tbody>
                         <?php
-                            while ($rooms = mysqli_fetch_assoc($rooms_result)) { ?>
-                                <tr>
-                                    <td><?php echo $rooms['room_no'] ?></td>
-                                    <td><?php echo $rooms['room_type'] ?></td>
-                                    <td>
-                                        <?php
-                                        if ($rooms['status'] == 0) {
-                                            echo '<a href="index.php?reservation&room_id=' . $rooms['room_id'] . '&room_type_id=' . $rooms['room_type_id'] . '" class="btn btn-success">Book Room</a>';
+                            foreach( $rooms as $room) {
+                        ?>
+                            <tr>
+                                <td><?=$room->room_no?></td>
+                                <td><?=$room->room_type?></td>
+                                <td>
+                                    <?php
+                                    if (!$room->status) {
+                                        echo "<a class='btn btn-success' href='datphong.php?room_id=$room->room_id&room_type_id=$room->room_type_id'>Book</a>";
+                                    } else {
+                                        echo '<button class="btn btn-danger" disabled>Booked</button>';
+                                    }
+                                    ?>
+                                    </form>
+                                <td>
+                                    <?php
+                                    if ($room->status) {
+                                        if (!$rooms->check_in_status) {
+                                            echo '<button class="btn btn-success" id="checkInRoom"  data-id="' . $room->room_id . '" data-toggle="modal" data-target="#checkIn">Check In</button>';
                                         } else {
-                                            echo '<a href="#" class="btn btn-danger">Booked</a>';
-                                        }
-                                        ?>
-
-
-                                    <td>
-                                        <?php
-                                        if ($rooms['status'] == 1 && $rooms['check_in_status'] == 0) {
-                                            echo '<button class="btn btn-success" id="checkInRoom"  data-id="' . $rooms['room_id'] . '" data-toggle="modal" data-target="#checkIn">Check In</button>';
-                                        } elseif ($rooms['status'] == 0) {
-                                            echo '-';
-                                        } else {
-
                                             echo '<a href="#" class="btn btn-danger">Checked In</a>';
                                         }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        if ($rooms['status'] == 1 && $rooms['check_in_status'] == 1) {
-                                            echo '<button class="btn btn-success" id="checkOutRoom" data-id="' . $rooms['room_id'] . '">Check Out</button>';
-                                        } elseif ($rooms['status'] == 0) {
-                                            echo '-';
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
+                                    }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    if ($room->status && $room->check_in_status) {
+                                        echo '<button class="btn btn-success" id="checkOutRoom" data-id="' . $room->room_id . '">Check Out</button>';
+                                    } elseif ($room->status == 0) {
+                                        echo '-';
+                                    }
+                                    ?>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                    <button <?=$room->status?'disabled':''?> title="Edit Room Information" data-toggle="modal"
+                                            data-target="#editRoom" data-id="<?=$room->room_id?>"
+                                            id="roomEdit" class="btn btn-info edit"><i class="fa fa-pencil"></i></button>
+                                        </div>
+                                        <div class="col-lg-4">
+                                    <?php
+                                    if ($room->status) {
+                                        echo '<button title="Customer Information" data-toggle="modal" data-target="#cutomerDetailsModal" data-id="' . $rooms->room_id . '" id="cutomerDetails" class="btn btn-warning"><i class="fa fa-eye"></i></button>';
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-lg-4">
+                                    <form action="index.php" method="post">
+                                        <input hidden name='del_id' value="<?=$room->room_id?>">
+                                        <button <?=$room->status?'disabled':''?> class="btn btn-danger" onclick="return confirm('Are you Sure?')"><i
+                                                    class="fa fa-trash" alt="delete"></i></button>
+                                    </form>
+                                </div>
+                                    </div>
+                                </td>
+                            </tr>
 
-                                        <button title="Edit Room Information" data-toggle="modal"
-                                                data-target="#editRoom" data-id="<?php echo $rooms['room_id']; ?>"
-                                                id="roomEdit" class="btn btn-info"><i class="fa fa-pencil"></i></button>
-                                        <?php
-                                        if ($rooms['status'] == 1) {
-                                            echo '<button title="Customer Information" data-toggle="modal" data-target="#cutomerDetailsModal" data-id="' . $rooms['room_id'] . '" id="cutomerDetails" class="btn btn-warning"><i class="fa fa-eye"></i></button>';
-                                        }
-                                        ?>
 
-                                        <a href="ajax.php?delete_room=<?php echo $rooms['room_id']; ?>"
-                                           class="btn btn-danger" onclick="return confirm('Are you Sure?')"><i
-                                                    class="fa fa-trash" alt="delete"></i></a>
-                                    </td>
-                                </tr>
-                            <?php }
+                        <?php
+                            }
+                        ?>
+
+                        <?php
                             echo "Không có phòng nào";
                         ?>
 
-                        </tbody> -->
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -125,34 +143,28 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form id="addRoom" data-toggle="validator" role="form">
+                            <form method="post" action="index.php" data-toggle="validator" role="form">
                                 <div class="response"></div>
                                 <div class="form-group">
                                     <label>Loại Phòng</label>
-                                    <select class="form-control" id="room_type_id" required
-                                            data-error="Select Loại Phòng">
-                                        <option selected disabled>Chọn                                       
-                                        </option>
+                                    <select class="form-control" name="room_type_id" required
+                                            data-error="Select">
+                                        <option selected disabled>Chọn</option>
                                         <?php
-                                        $query = "SELECT * FROM room_type";
-                                        $result = mysqli_query($connection, $query);
-                                        if (mysqli_num_rows($result) > 0) {
-                                            while ($room_type = mysqli_fetch_assoc($result)) {
-                                                echo '<option value="' . $room_type['room_type_id'] . '">' . $room_type['room_type'] . '</option>';
-                                            }
-                                        }
+                                          foreach( $roomTypes as $roomType) {
+                                            echo '<option value="' . $roomType->room_type_id . '">' . $roomType->room_type . '</option>';
+                                          }
                                         ?>
                                     </select>
                                     <div class="help-block with-errors"></div>
                                 </div>
-
                                 <div class="form-group">
                                     <label>Số Phòng</label>
-                                    <input class="form-control" placeholder="Room No" id="room_no"
+                                    <input class="form-control" placeholder="Room No" name="room_no"
                                            data-error="Enter Room No" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
-                                <button class="btn btn-success pull-right">Thêm Phòng</button>
+                                <button type="submit" name="add_room" class="btn btn-success pull-right">Thêm Phòng</button>
                             </form>
                         </div>
                     </div>
@@ -174,21 +186,18 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form id="roomEditFrom" data-toggle="validator" role="form">
+                            <form id="editRoom" action="index.php" method="post" data-toggle="validator" role="form">
                                 <div class="edit_response"></div>
                                 <div class="form-group">
+                                    <input hidden name="edit_id" value="0">
                                     <label>Loại Phòng</label>
                                     <select class="form-control" id="edit_room_type" required
                                             data-error="Select Loại Phòng">
                                         <option selected disabled>Select Loại Phòng</option>
                                         <?php
-                                        $query = "SELECT * FROM room_type";
-                                        $result = mysqli_query($connection, $query);
-                                        if (mysqli_num_rows($result) > 0) {
-                                            while ($room_type = mysqli_fetch_assoc($result)) {
-                                                echo '<option value="' . $room_type['room_type_id'] . '">' . $room_type['room_type'] . '</option>';
-                                            }
-                                        }
+                                          foreach( $roomTypes as $roomType) {
+                                            echo '<option value="' . $roomType->room_type_id . '">' . $roomType->room_type . '</option>';
+                                          }
                                         ?>
                                     </select>
                                     <div class="help-block with-errors"></div>
@@ -200,7 +209,7 @@
                                            data-error="Enter Room No">
                                     <div class="help-block with-errors"></div>
                                 </div>
-                                <input type="hidden" id="edit_room_id">
+                                <input type="hidden" name="room_id">
                                 <button class="btn btn-success pull-right">Edit Room</button>
                             </form>
                         </div>

@@ -60,6 +60,13 @@ var joining_date = $('.joining_date').fdatepicker({
 }).data('datepicker');
 
 
-
+$(document).ready(function () {
+    $("table").on('click', '.edit', function () {
+        let id = $(this).data("id") ;
+        console.log(id);
+        $(`input[name=edit_id]`).val(id);
+        console.log($(`input[name=edit_id]`).val());
+    });
+});
 
 

@@ -2,20 +2,20 @@
 class database{
     public $_dbh = '';
     public $_sql = '';
-    public $_cursor = NULL;        
-    
+    public $_cursor = NULL;
+
     public function database() {
-        
+
 		try{
 			$this->_dbh = new PDO('mysql:host=localhost; dbname=mis','root','1');
 			$this->_dbh->query('set names "utf8"');
 		}
 		catch(PDOException $ex){
 			echo $ex->getMessage();
-			die();  
+			die();
 		}
     }
-    
+
     public function setQuery($sql) {
         $this->_sql = $sql;
     }
@@ -32,7 +32,7 @@ class database{
         }else{
             return false;
         }
-        //return $this->getLastId(); 
+        //return $this->getLastId();
     }
 	//update
 	public function update($table,$data,$where){
@@ -52,7 +52,7 @@ class database{
             $results = $this->execute($param);
             return $results->rowCount();
         }
-    
+
     }
     //delete
     public function delete($table,$dataWhere=array()){
@@ -66,7 +66,7 @@ class database{
     //return $this->affectedRow();
 
     }
-    //Function execute the query 
+    //Function execute the query
     public function execute($options=array()) {
         $this->_cursor = $this->_dbh->prepare($this->_sql);
         if($options) {  //If have $options then system will be tranmission parameters
@@ -77,7 +77,7 @@ class database{
         $this->_cursor->execute();
         return $this->_cursor;
     }
-    
+
     //Funtion load datas on table
     public function loadAllRows($options=array()) {
         if(!$options) {
@@ -90,7 +90,7 @@ class database{
         }
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
-    
+
     //Funtion load 1 data on the table
     public function loadRow($option=array()) {
         if(!$option) {
@@ -103,7 +103,7 @@ class database{
         }
         return $result->fetch(PDO::FETCH_OBJ);
     }
-    
+
     //Function count the record on the table
     public function loadRecord($option=array()) {
         if(!$option) {
@@ -116,13 +116,13 @@ class database{
         }
         return $result->fetch(PDO::FETCH_COLUMN);
     }
-    
+
     public function getLastId() {
         return $this->_dbh->lastInsertId();
     }
-    
+
     public function disconnect() {
         $this->_dbh = NULL;
     }
 }
-?>  
+?>
