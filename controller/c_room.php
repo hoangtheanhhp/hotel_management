@@ -85,5 +85,30 @@ class C_room extends Controller{
         $mRoom->destroy($id);
         header("location:index.php");
     }
+
+    public function getDatPhong($request=array()) 
+    {
+        $mRoom = new M_room;
+        $rooms = $mRoom->getAllRoom();
+        $roomTypes = $mRoom->getAllRoomType();
+        $cardTypes = $mRoom->getCardType();
+        $info = $mRoom->getRoomTypeById($request['room_type_id']);
+        $data = [
+            'room_id' => $request['room_id'], 
+            'room_type_id' => $request['room_type_id'],  
+            'rooms' => $rooms,
+            'roomTypes' => $roomTypes, 
+            'cardTypes' => $cardTypes, 
+            'info' => $info, 
+        ];
+        return $this->loadView('reservation', $data);
+    }
+
+    public function booking($request=array())
+    {
+        $mRoom = new M_room;
+        $mRoom->booking($request);
+        header("location:index.php");        
+    }
 }
 ?>

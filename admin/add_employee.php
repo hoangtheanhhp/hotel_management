@@ -1,7 +1,7 @@
 <?php
 
-include('../controller/c_admin.php');
-$admin = new C_admin;
-$adminPage = $admin->getAddEmployee();
+include('../controller/c_employee.php');
+$admin = new C_employee;
+$adminPage = $admin->create();
 
 ?>
