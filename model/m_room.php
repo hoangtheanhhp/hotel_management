@@ -48,6 +48,12 @@ class M_room extends database{
         return $this->execute();
     }
 
+    public function getRoomTypeById($id) {
+        $sql = "SELECT * FROM room_type WHERE room_type_id = '$id';";
+        $this->setQuery($sql);
+        return $this->loadRow();
+    }
+
     public function getRoomDetail($room_id)
     {
         $sql = "SELECT * FROM room NATURAL JOIN room_type NATURAL JOIN booking NATURAL JOIN customer WHERE room_id = '$room_id' AND payment_status = '0';";
@@ -95,6 +101,32 @@ class M_room extends database{
             return true;
         }
         return false;
+    }
+
+    public function getCardType()
+        {
+            $sql = "SELECT * FROM id_card_type";
+            $this->setQuery($sql);
+            return $this->loadAllRows();    
+        }
+
+    public function booking($data=array())
+    {
+        $price = $this->getRoomTypeById($data['room_type_id']);
+        $price = $price->price;
+        $data['total_price']=$price*idate('d',strtotime($data['check_out_date'])-strtotime($data['check_in_date']));
+        $sql = "INSERT INTO customer (customer_name,contact_no,email,id_card_type_id,id_card_no,address) VALUES(?,?,?,?,?,?);";
+        $this->setQuery($sql);
+        $this->execute(array($data['name'], $data['contact_no'], $data['email'], $data['id_card'], $data['card_no'], $data['address']));
+        $sql = "SELECT customer_id FROM customer ORDER BY customer_id DESC LIMIT 1";
+        $this->setQuery($sql);
+        $customer_id = $this->loadRow()->customer_id;
+        $sql = "INSERT INTO booking (customer_id,room_id,check_in,check_out,total_price,remaining_price,payment_status) VALUES (?,?,?,?,?,?,?);";
+        $this->setQuery($sql);
+        $this->execute(array($customer_id, $data['room_id'], $data['check_in_date'], $data['check_out_date'], $data['total_price'], $data['total_price'], 0));        
+        $sql = "UPDATE room SET status = '1' WHERE room_id = '".$data['room_id']."';";
+        $this->setQuery($sql);
+        $this->execute();
     }
 }
 ?>

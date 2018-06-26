@@ -1,21 +1,10 @@
 <?php
-include('controller.php');
-include_once ('../model/m_admin.php');
-include_once ('../model/m_room.php');
+include_once 'controller.php';
+include_once '../model/m_room.php';
 
-class C_admin extends Controller{
+class C_admin extends Controller {
 
-    public function getDatPhong() 
-    {
-        $mRoom = new M_room;
-        $rooms = $mRoom->getAllRoom();
-        $roomTypes = $mRoom->getAllRoomType();
-        $data = [
-            'rooms' => $rooms,
-            'roomTypes' => $roomTypes, 
-        ];
-        return $this->loadView('reservation', $data);
-    }
+    
 
     public function getEmployee() 
     {

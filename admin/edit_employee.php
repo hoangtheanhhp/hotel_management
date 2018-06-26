@@ -2,6 +2,7 @@
 
 include('../controller/c_employee.php');
 $admin = new C_employee;
-$adminPage = $admin->index();
-
+if (isset($_GET['id'])) {
+    $adminPage = $admin->edit($_GET['id']);
+}
 ?>

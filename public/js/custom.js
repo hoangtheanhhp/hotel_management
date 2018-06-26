@@ -65,7 +65,6 @@ $(document).ready(function () {
         let id = $(this).data("id") ;
         console.log(id);
         $(`input[name=edit_id]`).val(id);
-        console.log($(`input[name=edit_id]`).val());
     });
 });
 
