@@ -1,19 +1,20 @@
 <?php
 include('controller.php');
-include('../model/m_admin.php');
+include_once ('../model/m_admin.php');
+include_once ('../model/m_room.php');
 
 class C_admin extends Controller{
 
-    public function getQuanLyPhong()
-    {
-        $mRoom = new M_admin;
-        $rooms= $mRoom->getAllRoom();
-        return $this->loadView('room');
-    }
-
     public function getDatPhong() 
     {
-        return $this->loadView('reservation');
+        $mRoom = new M_room;
+        $rooms = $mRoom->getAllRoom();
+        $roomTypes = $mRoom->getAllRoomType();
+        $data = [
+            'rooms' => $rooms,
+            'roomTypes' => $roomTypes, 
+        ];
+        return $this->loadView('reservation', $data);
     }
 
     public function getEmployee() 

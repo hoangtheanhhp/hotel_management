@@ -1,15 +1,6 @@
 <?php
-if (isset($_GET['room_id'])){
-    $get_room_id = $_GET['room_id'];
-    $get_room_sql = "SELECT * FROM room NATURAL JOIN room_type WHERE room_id = '$get_room_id'";
-    $get_room_result = mysqli_query($connection,$get_room_sql);
-    $get_room = mysqli_fetch_assoc($get_room_result);
-
-    $get_room_type_id = $get_room['room_type_id'];
-    $get_room_type = $get_room['room_type'];
-    $get_room_no = $get_room['room_no'];
-    $get_room_price = $get_room['price'];
-}
+    $rooms = $data['rooms'];
+    $roomTypes = $data['roomTypes'];
 
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -33,9 +24,6 @@ if (isset($_GET['room_id'])){
             <form role="form" id="booking" data-toggle="validator">
                 <div class="response"></div>
                 <div class="col-lg-12">
-                    <?php
-                    if (isset($_GET['room_id'])){?>
-
                         <div class="panel panel-default">
                             <div class="panel-heading">Room Information:
                                 <a class="btn btn-info pull-right" href="index.php?room_mang">Replan Booking</a>
@@ -78,7 +66,6 @@ if (isset($_GET['room_id'])){
                                 </div>
                             </div>
                         </div>
-                    <?php } else{?>
                         <div class="panel panel-default">
                             <div class="panel-heading">Room Information:
                                 <a class="btn btn-info pull-right" href="index.php?reservation">Replan Booking</a>
@@ -86,15 +73,11 @@ if (isset($_GET['room_id'])){
                             <div class="panel-body">
                                 <div class="form-group col-lg-6">
                                     <label>Room Type</label>
-                                    <select class="form-control" id="room_type" onchange="fetch_room(this.value);" required data-error="Select Room Type">
+                                    <select class="form-control" name="room_type_id" <?=isset($_GET['room_type'])?'disabled':''?> required data-error="Select Room Type">
                                         <option selected disabled>Select Room Type</option>
                                         <?php
-                                        $query  = "SELECT * FROM room_type";
-                                        $result = mysqli_query($connection,$query);
-                                        if (mysqli_num_rows($result) > 0){
-                                            while ($room_type = mysqli_fetch_assoc($result)){
-                                                echo '<option value="'.$room_type['room_type_id'].'">'.$room_type['room_type'].'</option>';
-                                            }}
+                                       
+                                           
                                         ?>
                                     </select>
                                     <div class="help-block with-errors"></div>
@@ -127,7 +110,6 @@ if (isset($_GET['room_id'])){
                                 </div>
                             </div>
                         </div>
-                    <?php }
                     ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">Customer Detail:</div>
