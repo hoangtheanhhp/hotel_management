@@ -17,11 +17,6 @@
                 Quản lý phòng
             </a>
         </li>
-        <li class="<?= !strpos($_SERVER[REQUEST_URI],'/admin/datphong.php')?'':'active' ?>">
-            <a href="datphong.php"><em class="fa fa-calendar">&nbsp;</em>
-                Đặt phòng
-            </a>
-        </li>
         <li class="<?= !strpos($_SERVER[REQUEST_URI],'/admin/employee.php')?'':'active' ?>">
             <a href="employee.php"><em class="fa fa-dashboard">&nbsp;</em>
                 Quản lý nhân viên
@@ -32,12 +27,6 @@
                 Thêm nhân viên
             </a>
         </li>
-        <li class="<?= !strpos($_SERVER[REQUEST_URI],'/admin/complain.php')?'':'active' ?>">
-            <a href="complain.php"><em class="fa fa-envelope">&nbsp;</em>
-                Phản ánh
-            </a>
-        </li>
-
         <li><a href="../dangxuat.php"><em class="fa fa-power-off">&nbsp;</em> Đăng xuất</a></li>
     </ul>
 </div><!--/.sidebar-->

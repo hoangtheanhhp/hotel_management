@@ -34,6 +34,7 @@ class C_user extends Controller{
 		$m_user = new M_user();
 		$user = $m_user->timUser($email,$password);
 		if($user == true){
+			$_SESSION['login'] = 1;
 			$_SESSION['user_name'] = $user->name;
 			$_SESSION['user_id'] = $user->id; //luc them binh luan
 			unset($_SESSION['chua_dang_nhap']); //lúc thêm bình luận

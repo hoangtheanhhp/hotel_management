@@ -4,7 +4,10 @@ include_once '../model/m_room.php';
 
 class C_admin extends Controller {
 
-    
+    public function index() 
+    {
+        include_once 'views/index.php';
+    }
 
     public function getEmployee() 
     {
