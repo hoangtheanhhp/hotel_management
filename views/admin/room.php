@@ -115,11 +115,6 @@
                         <?php
                             }
                         ?>
-
-                        <?php
-                            echo "Không có phòng nào";
-                        ?>
-
                         </tbody>
                     </table>
                 </div>

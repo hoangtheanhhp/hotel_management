@@ -34,27 +34,7 @@ class database{
         }
         //return $this->getLastId();
     }
-	//update
-	public function update($table,$data,$where){
-        if(!empty($data)){
-            $newQuery = '';
-            $param    = array();
-            foreach($data as $key => $value){
-            $newQuery .= ", $key = ?";
-            $param[]   = $value;
-            }
-            $newQuery = substr($newQuery,2);
-            $sql      = "UPDATE $table SET ".$newQuery;
-            if (!empty($where)) {
-                $sql    .= "WHERE $where";
-            }
-            $this->setQuery($sql);
-            $results = $this->execute($param);
-            return $results->rowCount();
-        }
 
-    }
-    //delete
     public function delete($table,$dataWhere=array()){
         if(!empty($dataWhere)){
             $count = count($dataWhere);

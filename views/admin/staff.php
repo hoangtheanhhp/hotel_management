@@ -12,21 +12,21 @@
             <li><a href="#">
                     <em class="fa fa-home"></em>
                 </a></li>
-            <li class="active">Staff Management</li>
+            <li class="active">Quản lí nhân viên</li>
         </ol>
     </div><!--/.row-->
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Staff Management</h1>
+            <h1 class="page-header">Quản lí nhân viên</h1>
         </div>
     </div><!--/.row-->
 
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Employee Details:
-                    <a href="add_employee.php" class="btn btn-info pull-right">Add Employee</a>
+                <div class="panel-heading">Danh sách nhân viên:
+                    <a href="add_employee.php" class="btn btn-info pull-right">Thêm Nhân Viên</a>
                 </div>
                 <div class="panel-body">
                     <?php
@@ -45,13 +45,13 @@
                            id="rooms">
                         <thead>
                         <tr>
-                            <th>Sr. No</th>
-                            <th>Employee Name</th>
-                            <th>Staff</th>
-                            <th>Shift</th>
-                            <th>Joining Date</th>
-                            <th>Salary</th>
-                            <th>Action</th>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Nghiệp vụ</th>
+                            <th>Ca làm việc</th>
+                            <th>Ngày vào</th>
+                            <th>Lương</th>
+                            <th>Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,13 +59,12 @@
                             foreach($staff as $s) {
                         ?>
                                 <tr>
-
                                     <td><?=$s->emp_id?></td>
                                     <td><?=$s->emp_name?></td>
                                     <td><?=$s->staff_type?></td>
                                     <td><?=$s->shift . ' - ' . $s->shift_timing?></td>
                                     <td><?=date('M j, Y', strtotime($s->joining_date))?></td>
-                                    <td><?=$s->salary?></td>
+                                    <td><?=$s->salary?> VNĐ</td>
                                     <td>
                                     <div class="row">
                                         <div class="col-md-3">
@@ -86,8 +85,6 @@
                                     </div>
                                     </td>
                                 </tr>
-
-
                         <?php
                             }
                         ?>

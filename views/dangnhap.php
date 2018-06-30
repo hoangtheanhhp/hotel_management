@@ -7,10 +7,6 @@ if(isset($_POST['login']))
     $user = $c_user->luu_dang_nhap($email,$password);
 }
 ?>
-<!--
-    you can substitue the span of reauth email for a input with the email and
-    include the remember me checkbox
-    -->
 <html>
 <head>
     <link href="public/css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +18,7 @@ if(isset($_POST['login']))
 <div class="container">
     <div class="card card-container">
         <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
-        <p id="profile-name" class="profile-name-card">Đăng nhập Summer System</p>
+        <p id="profile-name" class="profile-name-card">Đăng nhập Summer Hotel System</p>
         <br>
         <div class="result">
             <?php
