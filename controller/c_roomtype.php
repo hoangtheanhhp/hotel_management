@@ -57,8 +57,15 @@ class C_roomtype extends Controller{
         }
         $request['image'] = $file_name;
         $mRoomType = new m_roomtype;
-        $mRoomType->store($request);
-        header('location:room_type.php');        
+        if ($mRoomType->store($request)) {
+            if(isset($_SESSION['error'])) {
+                unset($_SESSION['error']);
+            }
+            header("location:room_type.php");
+        } else {
+            $_SESSION['error'] = "Đã có loại phòng này";
+            header("location:add_roomtype.php");
+        }
     }
 
 }
