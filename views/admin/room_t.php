@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div id="success"></div>
+
         </div>
     </div>
 
@@ -24,6 +24,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Quản lý loại phòng
+                    <a class="btn btn-info pull-right" href="add_roomtype.php">Thêm Loại Phòng</a>
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%"
@@ -42,7 +43,7 @@
                         ?>
                             <tr>
                                 <td><?=$r->room_type_id?></td>
-                                <td><img src="image/<?=$r->image?>" tag="" ></td>
+                                <td><img src="../images/<?=$r->image?>" tag="" height="100"></td>
                                 <td><?=$r->room_type?></td>
                                 <td><?=$r->price?></td>
                            

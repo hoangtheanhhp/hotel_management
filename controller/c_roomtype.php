@@ -20,9 +20,9 @@ class C_roomtype extends Controller{
 
     public function store($request=array())
     {
-        var_dump($_FILES);
-        $target_dir = "image/";
-        $target_file = $target_dir . basename($_FILES["image"]["name"]);
+        $target_dir = "../images/";
+        $file_name = time().basename($_FILES["image"]["name"]);
+        $target_file = $target_dir . $file_name;
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         // Check if image file is a actual image or fake image
@@ -32,7 +32,7 @@ class C_roomtype extends Controller{
             $uploadOk = 0;
         }
         // Check file size
-        if ($_FILES["image"]["size"] > 500000) {
+        if ($_FILES["image"]["size"] > 50000) {
             echo "Sorry, your file is too large.";
             $uploadOk = 0;
         }
@@ -47,16 +47,19 @@ class C_roomtype extends Controller{
             echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
         } else {
+            // echo $target_file;
+            // exit();
             if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
                 echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
         }
-        array_push($request, $target_file);
+        $request['image'] = $file_name;
         $mRoomType = new m_roomtype;
         $mRoomType->store($request);
         header('location:room_type.php');        
     }
+
 }
 ?>

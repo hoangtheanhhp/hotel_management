@@ -1,27 +1,18 @@
 <?php
 include_once 'controller.php';
-include_once '../model/m_room.php';
+include_once 'model/m_roomtype.php';
 
 class C_admin extends Controller {
 
     public function index() 
     {
+        $mRoomType = new M_roomtype;
+        $rType = $mRoomType->getAllRoomType();
+        $data = [
+            'rType' => $rType, 
+        ];
         include_once 'views/index.php';
     }
 
-    public function getEmployee() 
-    {
-        return $this->loadView('staff');
-    }
-
-    public function getComplain() 
-    {
-        return $this->loadView('note');
-    }
-
-    public function getAddEmployee()
-    {
-        return $this->loadView('add_emp');
-    }
 }
 ?>

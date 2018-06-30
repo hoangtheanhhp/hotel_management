@@ -59,7 +59,6 @@
                             foreach($staff as $s) {
                         ?>
                                 <tr>
-
                                     <td><?=$s->emp_id?></td>
                                     <td><?=$s->emp_name?></td>
                                     <td><?=$s->staff_type?></td>
@@ -86,8 +85,6 @@
                                     </div>
                                     </td>
                                 </tr>
-
-
                         <?php
                             }
                         ?>

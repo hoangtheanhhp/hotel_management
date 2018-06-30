@@ -1178,7 +1178,10 @@ p.about-para-w3ls {
 .tab4 .team-img-w3-agile{
 	  background: url(../images/teamb4.jpg)no-repeat 0px 0px;
 }
-.tab1 .team-img-w3-agile,.tab2 .team-img-w3-agile,.tab3 .team-img-w3-agile,.tab4 .team-img-w3-agile{
+.tab5 .team-img-w3-agile{
+	  background: url(../images/teamb5.jpg)no-repeat 0px 0px;
+}
+.tab1 .team-img-w3-agile,.tab2 .team-img-w3-agile,.tab3 .team-img-w3-agile,.tab4 .team-img-w3-agile,.tab5 .team-img-w3-agile{
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;

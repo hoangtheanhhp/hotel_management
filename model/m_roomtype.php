@@ -10,9 +10,9 @@ class M_roomtype extends database{
 
     public function store($data=array())
     {
-        $sql = "INSERT INTO room_type(room_type,price,image) values(?,?,?);";
+        $sql = "INSERT INTO room_type(room_type,price,image) values('".$data['room_type']."','".$data['price']."','".$data['image']."');";
         $this->setQuery($sql);
-        return $this->execute($data);
+        return $this->execute();
     }
 
 }

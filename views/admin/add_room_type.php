@@ -47,8 +47,7 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-lg btn-primary">Submit</button>
-                        <button type="reset" class="btn btn-lg btn-danger">Reset</button>
+                        <button type="submit" class="btn btn-lg btn-primary">Gửi</button>
                     </form>
                 </div>
             </div>
