@@ -48,7 +48,6 @@
                             <th>STT</th>
                             <th>Họ và tên</th>
                             <th>Nghiệp vụ</th>
-                            <th>Ca làm việc</th>
                             <th>Ngày vào</th>
                             <th>Lương</th>
                             <th>Hành động</th>
@@ -59,30 +58,31 @@
                             foreach($staff as $s) {
                         ?>
                                 <tr>
-                                    <td><?=$s->emp_id?></td>
-                                    <td><?=$s->emp_name?></td>
-                                    <td><?=$s->staff_type?></td>
-                                    <td><?=$s->shift . ' - ' . $s->shift_timing?></td>
-                                    <td><?=date('M j, Y', strtotime($s->joining_date))?></td>
+                                    <td><?=$s->id?></td>
+                                    <td><?=$s->name?></td>
+                                    <td><?=$s->admin?'Admin':'Nhân viên'?></td>
+                                    <td><?=date('M j, Y', strtotime($s->created_at))?></td>
                                     <td><?=$s->salary?> VNĐ</td>
                                     <td>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <a class="btn btn-primary" href="edit_employee.php?id=<?=$s->emp_id?>"><i class="fa fa-pencil"></i></a>
+                                        <?php if (isset($_SESSION['admin'])) {
+                                        ?>
+
+                                        <div class="row">
+                                        <div class="col-md-6">
+                                            <a class="btn btn-primary" href="edit_employee.php?id=<?=$s->id?>"><i class="fa fa-pencil"></i></a>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <form action="employee.php" method="post">
-                                                <input hidden name="del_id" value="<?=$s->emp_id?>">
+                                                <input hidden name="del_id" value="<?=$s->id?>">
                                              <button
                                            class="btn btn-danger" onclick="return confirm('Are you Sure?')"><i
                                                     class="fa fa-trash"></i></button>
                                             </form>
                                         </div>
-                                        <div class="col-md-3">
-                                            <a href='employee_detail.php?id=<?=$s->emp_id?>'
-                                           class="btn btn-success" title="Employee Histery"><i class="fa fa-eye"></i></a>
-                                        </div>
+                                        
                                     </div>
+                                    <?php }
+                                        ?>
                                     </td>
                                 </tr>
                         <?php

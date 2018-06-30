@@ -7,21 +7,20 @@ class C_employee extends Controller{
     public function store($request=array()) 
     {
         $mEmployee = new M_employee;
-        if ($mEmployee->store($request)) header("location:employee.php");
-        header("location:add_employee.php");
+        if ($mEmployee->store($request)) {
+            if(isset($_SESSION['error'])) {
+                unset($_SESSION['error']);
+            }
+            header("location:employee.php");
+        } else {
+            $_SESSION['error'] = "Username hoặc email đã tồn tại.";
+            header("location:add_employee.php");
+        }
     }
 
     public function create()
     {
         $mEmployee = new M_employee;
-        $staffType = $mEmployee->getStaffType();
-        $shift = $mEmployee->getShift();
-        $cardType = $mEmployee->getCardType();
-        $data = [
-            'staffType' => $staffType, 
-            'shift' => $shift, 
-            'cardType' => $cardType, 
-        ];
         return $this->loadView('add_emp', $data);
     }
 
@@ -35,39 +34,21 @@ class C_employee extends Controller{
         return $this->loadView('staff', $data);
     }
 
-    public function show($id)
-    {
-        $mEmployee = new M_employee;
-        $history = $mEmployee->getHisById($id);
-        $employee = $mEmployee->getEmpInfoById($id);
-        $data = [
-            'history' => $history, 
-            'employee' => $employee, 
-        ];
-        return $this->loadView('emp_history', $data);
-    }
-
     public function edit($id)
     {
         $mEmployee = new M_employee;
-        $staffType = $mEmployee->getStaffType();
-        $shift = $mEmployee->getShift();
-        $cardType = $mEmployee->getCardType();
         $staff = $mEmployee->getStaffById($id);
         $data = [
-            'staffType' => $staffType, 
-            'shift' => $shift, 
-            'cardType' => $cardType, 
             'staff' => $staff, 
         ];
         return $this->loadView('edit_emp', $data);
     }
 
-    public function update($id, $request)
+    public function update($id, $request=array())
     {
         $mEmployee = new M_employee;
-        if ($mEmployee->update($id, $request)) header("location:employee.php");
-        header("location:edit_employee.php?id=$id");
+        $mEmployee->update($id,$request);
+        header("location:employee.php");
     }
 
     public function destroy($id)

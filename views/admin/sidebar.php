@@ -6,7 +6,7 @@
         </div>
         <div class="profile-usertitle">
             <div class="profile-usertitle-name"><?=$_SESSION['user_name'];?></div>
-            <div class="profile-usertitle-status"><span class="indicator label-success"></span>Admin</div>
+            <div class="profile-usertitle-status"><span class="indicator label-success"></span><?=isset($_SESSION['admin'])?'Admin':'Nhân Viên'?></div>
         </div>
         <div class="clear"></div>
     </div>
@@ -22,16 +22,23 @@
                 Quản lý nhân viên
             </a>
         </li>
+        <?php if (isset($_SESSION['admin'])) {
+
+        ?>
         <li class="<?= !strpos($_SERVER[REQUEST_URI],'/admin/add_employee.php')?'':'active' ?>">
             <a href="add_employee.php"><em class="fa fa-plus">&nbsp;</em>
                 Thêm nhân viên
             </a>
         </li>
+       
         <li class="<?= !strpos($_SERVER[REQUEST_URI],'/admin/room_type.php')?'':'active' ?>">
             <a href="room_type.php"><em class="fa fa-phone">&nbsp;</em>
                 Loại phòng
             </a>
         </li>
+         <?php
+        }
+        ?>
         <li class="<?= !strpos($_SERVER[REQUEST_URI],'/admin/request.php')?'':'active' ?>">
             <a href="request.php"><em class="fa fa-folder">&nbsp;</em>
                 Yêu cầu

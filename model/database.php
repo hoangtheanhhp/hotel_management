@@ -55,7 +55,6 @@ class database{
             }
         }
         $this->_cursor->execute();
-        $this->_cursor->execute();
         return $this->_cursor;
     }
 

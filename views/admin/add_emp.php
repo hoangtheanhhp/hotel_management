@@ -1,9 +1,6 @@
  <?php
-    $staffType = $data['staffType'];
-    $shifts = $data['shift'];
-    $cardTypes = $data['cardType'];
     $cEmployee = new C_employee();
-    if(isset($_POST['staff'])) {
+    if(isset($_POST['username'])) {
         $cEmployee->store($_POST);
     }
 ?>
@@ -27,78 +24,52 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Đăng kí</div>
                 <div class="panel-body">
-                    <div class="emp-response"></div>
+                    <?php
+                    if (isset($_SESSION['error'])) {
+                        echo "<div class='alert alert-danger'>
+                                <span class='glyphicon glyphicon-info-sign'></span> &nbsp; ".$_SESSION['error']."
+                            </div>";
+                    }
+                    ?>
                     <form role="form" action="add_employee.php" method="post" data-toggle="validator">
                         <div class="row">
+                        
                             <div class="form-group col-lg-6">
-                                <label>Nghiệp vụ</label>
-                                <select class="form-control" name="staff" required data-error="Hãy chọn loại nghiệp vụ">
-                                    <option selected disabled>Chọn loại nghiệp vụ</option>
-                                    <?php
-                                        foreach($staffType as $staff)
-                                        echo '<option value="' . $staff->staff_type_id . '">' . $staff->staff_type . '</option>';                                    
-                                    ?>
-                                </select>
+                                <label>Họ và tên</label>
+                                <input type="text" class="form-control" placeholder="Hoang Van A" name="name" required data-error="Hãy nhập họ và tên">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            
+                            <div class="form-group col-lg-6">
+                                <label>Email</label>
+                                <input type="text" class="form-control" placeholder="hoangvana@gmail.com" name="email" required data-error="Hãy nhập địa chỉ email">
                                 <div class="help-block with-errors"></div>
                             </div>
 
                             <div class="form-group col-lg-6">
-                                <label>Ca làm việc</label>
-                                <select class="form-control" name="shift" required data-error="Hãy chọn ca làm việc">
-                                    <option selected disabled>Chọn ca làm việc</option>
-                                    <?php
-                                        foreach($shifts as $shift)
-                                            echo '<option value="' . $shift->shift_id . '">' . $shift->shift . ' - ' . $shift->shift_timing . '</option>';
-                                    ?>
-                                </select>
+                                <label>Username</label>
+                                <input type="text" class="form-control" placeholder="hoangvana" name="username" required data-error="Hãy nhập username">
                                 <div class="help-block with-errors"></div>
                             </div>
-
+                            
                             <div class="form-group col-lg-6">
-                                <label>Họ</label>
-                                <input type="text" class="form-control" placeholder="First Name" name="first_name" required data-error="Enter First Name">
-                                <div class="help-block with-errors"></div>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label>Tên</label>
-                                <input type="text" class="form-control" placeholder="Last Name" name="last_name">
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label>Giấy tờ</label>
-                                <select class="form-control" name="card_type" required>
-                                    <option selected disabled >Giấy tờ</option>
-                                    <?php
-                                        foreach($cardTypes as $cardType) {
-                                            echo '<option value="' . $cardType->id_card_type_id . '">' . $cardType->id_card_type . '</option>';
-                                        }
-                                    ?>
-                                </select>
-                                <div class="help-block with-errors"></div>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label>Số thẻ</label>
-                                <input type="text" class="form-control" placeholder="Số thẻ" name="card_no" required>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label>Số điện thoại</label>
-                                <input type="number" class="form-control" placeholder="Số điện thoại" name="contact_no" required>
-                                <div class="help-block with-errors"></div>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label>Địa chỉ</label>
-                                <input type="text" class="form-control" placeholder="Địa chỉ" name="address" required>
+                                <label>Password</label>
+                                <input type="password" class="form-control" placeholder="password" name="pasword" required data-error="Hãy nhập password">
                                 <div class="help-block with-errors"></div>
                             </div>
 
                             <div class="form-group col-lg-6">
                                 <label>Lương</label>
-                                <input type="number" class="form-control" placeholder="Lương" name="salary" data-error="Enter Salary" required>
+                                <input type="number" class="form-control" placeholder="Lương" name="salary" data-error="Hãy Nhập Lương" required>
                                 <div class="help-block with-errors"></div>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label>Quyền</label>
+                                <select class="form-control" name="admin">
+                                    <option value="0">Nhân viên</option>
+                                    <option value="1">Admin</option>
+                                </select>
                             </div>
 
                         </div>
